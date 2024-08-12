@@ -58,7 +58,12 @@ const User = {
         role,
       ]
     );
-    return result.insertId;
+
+    const id = result.insertId;
+
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
+
+    return rows[0];
   },
 
   updateUser: async (id, user) => {
@@ -105,6 +110,39 @@ const User = {
 
   deleteUser: async (id) => {
     const [result] = await db.query("DELETE FROM users WHERE id = ?", [id]);
+    return result.affectedRows;
+  },
+
+  getUserStatusByUserId: async (id) => {
+    const [rows] = await db.query(
+      "SELECT * FROM account_status WHERE uid = ?",
+      [id]
+    );
+    return rows;
+  },
+
+  createUserStatus: async (user) => {
+    const { uid, status_type, is_done, media } = user;
+    const [result] = await db.query(
+      "INSERT INTO account_status (uid, status_type, is_done, media ) VALUES (?, ?, ?, ?)",
+      [uid, status_type, is_done, media]
+    );
+
+    const id = result.insertId;
+
+    const [rows] = await db.query("SELECT * FROM account_status WHERE id = ?", [
+      id,
+    ]);
+
+    return rows[0];
+  },
+
+  updateUserStatus: async (id, user) => {
+    const { status_type, is_done, media } = user;
+    const [result] = await db.query(
+      "UPDATE users SET status_type = ?, is_done = ?, media = ? WHERE id = ?",
+      [status_type, is_done, media, id]
+    );
     return result.affectedRows;
   },
 };

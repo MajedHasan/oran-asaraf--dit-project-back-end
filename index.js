@@ -5,6 +5,7 @@ const ditRoutes = require("./routes/ditRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const inboxRoutes = require("./routes/inboxRoutes");
 const upload = require("./middleware/uploadMiddleware");
+const path = require("path");
 const cors = require("cors"); // Import the cors package
 
 // Middleware for parsing JSON
@@ -12,6 +13,9 @@ app.use(express.json());
 
 // Use CORS middleware
 app.use(cors());
+
+// app.use("/uploads", express.static("public/uploads"));
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Routes
 app.use("/api/users", userRoutes);
@@ -26,7 +30,14 @@ app.get("/", (req, res) => {
 
 // File upload route
 app.post("/upload", upload.single("file"), (req, res) => {
-  res.send("File uploaded successfully");
+  if (!req.file) {
+    return res.status(400).send({ error: "Please upload a file" });
+  }
+
+  const fileUrl = `${req.protocol}://${req.get("host")}/public/uploads/${
+    req.file.filename
+  }`;
+  res.status(200).send({ fileUrl });
 });
 
 // Start server

@@ -17,10 +17,10 @@ const Inbox = {
   },
 
   createInbox: async (inbox) => {
-    const { uid, title, description, sendTime } = inbox;
+    const { uid, title, description, sendTime, media } = inbox;
     const [result] = await db.query(
-      "INSERT INTO inbox (title, description, send_time, uid) VALUES (?, ?, ?, ?)",
-      [title, description, sendTime, uid]
+      "INSERT INTO inbox (title, description, send_time, uid, media) VALUES (?, ?, ?, ?, ?)",
+      [title, description, sendTime, uid, media]
     );
     return result.insertId;
   },
