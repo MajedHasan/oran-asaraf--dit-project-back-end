@@ -21,9 +21,5 @@
       "memory": 1024,
       "maxDuration": 60
     }
-  },
-  "static": {
-    "public": "public",
-    "ignore": ["uploads/**"]
   }
 }
