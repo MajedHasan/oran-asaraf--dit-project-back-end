@@ -52,10 +52,10 @@ const Transaction = {
   },
 
   updateTransaction: async (id, user) => {
-    const { name, email } = user;
+    const { status, withdrawal } = user;
     const [result] = await db.query(
-      "UPDATE transactions SET name = ?, email = ? WHERE id = ?",
-      [name, email, id]
+      "UPDATE transactions SET status = ?, withdrawal = ? WHERE id = ?",
+      [status, withdrawal, id]
     );
     return result.affectedRows;
   },

@@ -4,6 +4,7 @@ const userRoutes = require("./routes/userRoutes");
 const ditRoutes = require("./routes/ditRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const inboxRoutes = require("./routes/inboxRoutes");
+const bankRoutes = require("./routes/bankRoutes");
 const upload = require("./middleware/uploadMiddleware");
 const path = require("path");
 const cors = require("cors"); // Import the cors package
@@ -22,6 +23,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/dit", ditRoutes);
 app.use("/api/transaction", transactionRoutes);
 app.use("/api/inbox", inboxRoutes);
+app.use("/api/bank", bankRoutes);
 
 // Home route
 app.get("/", (req, res) => {

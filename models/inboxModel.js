@@ -35,9 +35,7 @@ const Inbox = {
   },
 
   deleteInbox: async (id) => {
-    const [result] = await db.query("DELETE FROM dit_account WHERE id = ?", [
-      id,
-    ]);
+    const [result] = await db.query("DELETE FROM inbox WHERE id = ?", [id]);
     return result.affectedRows;
   },
 };

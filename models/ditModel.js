@@ -37,11 +37,11 @@ const Dit = {
     return result.insertId;
   },
 
-  updateDit: async (id, user) => {
-    const { name, email } = user;
+  updateDit: async (id, date) => {
+    const { status, amount } = date;
     const [result] = await db.query(
-      "UPDATE dit_account SET name = ?, email = ? WHERE id = ?",
-      [name, email, id]
+      "UPDATE dit_account SET status = ?, amount = ? WHERE id = ?",
+      [status, amount, id]
     );
     return result.affectedRows;
   },
